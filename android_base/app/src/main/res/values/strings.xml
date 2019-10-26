@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ImageCalendar</string>
+    <string name="welcome">Welcome!</string>
+    <string name="welcome2">Begin by taking a photo.</string>
 </resources>
