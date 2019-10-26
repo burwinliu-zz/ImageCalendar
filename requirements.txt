@@ -1,0 +1,40 @@
+# This file may be used to create an environment using:
+# $ conda create --name <env> --file <this file>
+# platform: win-64
+asn1crypto=1.2.0=py37_0
+boto3=1.9.234=py_0
+botocore=1.12.234=py_0
+ca-certificates=2019.10.16=0
+certifi=2019.9.11=py37_0
+cffi=1.13.0=py37h7a1dbc1_0
+click=7.0=py_0
+cryptography=2.8=py37h7a1dbc1_0
+datefinder=0.7.0=pypi_0
+docutils=0.15.2=py37_0
+flask=1.1.1=py_0
+idna=2.8=py37_0
+itsdangerous=1.1.0=py37_0
+jinja2=2.10.3=py_0
+jmespath=0.9.4=py_0
+markupsafe=1.1.1=py37he774522_0
+openssl=1.1.1d=he774522_3
+pip=19.3.1=py37_0
+pycparser=2.19=py37_0
+pyopenssl=19.0.0=py37_0
+pysocks=1.7.1=py37_0
+python=3.7.4=h5263a28_0
+python-dateutil=2.8.0=py37_0
+python-dotenv=0.10.3=py_0
+pytz=2019.3=pypi_0
+regex=2019.08.19=pypi_0
+s3transfer=0.2.1=py37_0
+setuptools=41.4.0=py37_0
+six=1.12.0=py37_0
+sqlite=3.30.0=he774522_0
+urllib3=1.25.6=py37_0
+vc=14.1=h0510ff6_4
+vs2015_runtime=14.16.27012=hf0eaf9b_0
+werkzeug=0.16.0=py_0
+wheel=0.33.6=py37_0
+win_inet_pton=1.1.0=py37_0
+wincertstore=0.2=py37_0
