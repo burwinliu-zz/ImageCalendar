@@ -4,7 +4,7 @@ Take image of an event poster and convert it to Google Calendar events
 ### Tools
 * Google API (Calendars)
 * AWS Rekognize
-* Android Studios
+* Android Studios, NDK
 
 
 ### Languages
