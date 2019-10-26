@@ -1,10 +1,16 @@
-from flask import Flask
+from flask import Flask, request, jsonify
+from image import process_image
+
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/get_event', methods=['GET'])
 def hello():
-    return "Hello World!"
+    if request.method == 'GET':
+        bucket_name = request.args.get('bucket')
+        key = request.args.get('key')
+        res = process_image(bucket_name, key)
+        return jsonify(res)
 
 
 if __name__ == '__main__':
