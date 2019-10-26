@@ -1,0 +1,13 @@
+
+
+Outline:
+    # Separate the many items of the project into 3 simple categories
+
+    Camera
+        Capture the image and have it sent to processing
+
+    Calendar
+        Have the item sent over to this be uploaded into the google calendar API to add it to the
+        calendar associated with this android account
+
+    Processing
