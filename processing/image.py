@@ -1,5 +1,12 @@
 import boto3
 import os
+from os import getenv
+from definition import ROOT_DIR
+from dotenv import load_dotenv
+
+
+load_dotenv(dotenv_path=os.path.join(ROOT_DIR, ".env"))
+
 
 if __name__ == "__main__":
 
@@ -7,15 +14,10 @@ if __name__ == "__main__":
     bucket = 'bucket'
     photo = 'photo.jpg'
 
-    session = boto3.Session(
-        aws_access_key_id=os.getenv('AWS_SERVER_PUBLIC_KEY'),
-        aws_secret_access_key=os.getenv('AWS_SERVER_SECRET_KEY'),
-    )
-
-    client=boto3.client('rekognition',
-                        region_name='us-west-2',
-                        aws_access_key_id=os.getenv('AWS_SERVER_PUBLIC_KEY'),
-                        aws_secret_access_key=os.getenv('AWS_SERVER_SECRET_KEY'),)
+    client = boto3.client('rekognition',
+                        region_name='us-west-1',
+                        aws_access_key_id=os.getenv('AWS_ID'),
+                        aws_secret_access_key=os.getenv('AWS_SECRET'),)
 
     response = client.detect_labels(Image={'S3Object': {'Bucket': bucket, 'Name': photo}})
 
