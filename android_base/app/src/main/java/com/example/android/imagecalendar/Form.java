@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 public class Form extends AppCompatActivity {
     EditText m_title, m_date, m_startTime, m_endTime, m_description;
-    CalendarEvent ce;
+    CalendarEvent ce = new CalendarEvent();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,9 +28,8 @@ public class Form extends AppCompatActivity {
         m_endTime=(EditText) findViewById(R.id.endTime);
         m_description=(EditText) findViewById(R.id.description);
 
-        JSONObject res = null;
         try {
-            res = new JSONObject("");
+            JSONObject res = new JSONObject("{\"description\":[\"A sensory- sory-friendly movie night for\",\"people on the spectrum\",\"April 2, 2019 6PM\",\"San Dias Community Hall\",\"Community Hall is wheelchair-accessible.\",\"SAN DIAS COMMUNLTY CENTER\"],\"times\":[\"Tue, 02 Apr 2019 18:00:00 GMT\"],\"title\":\"Lights Up, Sound Down \"}\n");
             JSONArray arr = null;
             try {
                 arr = res.getJSONArray("description");
@@ -59,11 +58,18 @@ public class Form extends AppCompatActivity {
             } catch (Exception e) {
             }
             //TODO: Parse string into date, end time
-
+            try {
+                ce.setDate(res.getJSONArray("times").getString(0));
+            } catch (Exception e) {
+            }
         } catch (Exception e) {
         }
 
-
+        m_title.setText(ce.getTitle());
+        m_description.setText(ce.getDescription());
+        m_date.setText(ce.getDate().toString());
+        m_startTime.setText(ce.getStartTime().toString());
+        m_endTime.setText(ce.getStartTime().toString());
     }
 
     public void addEvent(View view){

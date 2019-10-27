@@ -17,7 +17,7 @@ public class CalendarEvent {
     //String date = "";
     Date date = new Date(19, 10, 00);
 
-    public CalendarEvent(JSONObject json) {
+    public CalendarEvent() {
 
     }
 
