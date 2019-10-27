@@ -10,8 +10,8 @@ public class CalendarEvent {
     String endTime = "";
     String date = "";
 
-    public static void main(String[] args) {
-        CalendarEvent event = new CalendarEvent();
+    public CalendarEvent() {
+        
     }
 
     public void setTitle(String tt) {
