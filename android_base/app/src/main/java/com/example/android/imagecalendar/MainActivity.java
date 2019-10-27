@@ -29,13 +29,8 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferService;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.mobileconnectors.appsync.AWSAppSyncClient;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
 
 import java.io.File;
 import java.io.IOException;
@@ -137,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements WelcomeDialog.Wel
 //        Bitmap rawImage = rotateBitmap(BitmapFactory.decodeFile(photo.getAbsolutePath()), );
         Bitmap rawImage = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(photo.getAbsolutePath()), 2048, 1536, true);
         img.setImageBitmap(rawImage);
+        uploadWithTransferUtility();
 //        uploadtos3(MainActivity.this, photo);
 //        Log.d("MainActivity", currentPhotoPath);
 
@@ -157,131 +153,54 @@ public class MainActivity extends AppCompatActivity implements WelcomeDialog.Wel
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
-//    public void uploadtos3(){
-//        Regions clientRegion = Regions.US_WEST_1;
-//        String bucketName = "*** Bucket name ***";
-//        String stringObjKeyName = "*** String object key name ***";
-//        String fileObjKeyName = "*** File object key name ***";
-//        String fileName = currentPhotoPath;
-//
-//        try {
-//            //This code expects that you have AWS credentials set up per:
-//            // https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html
-//            AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-//                    .withRegion(clientRegion)
-//                    .build();
-//
-//            // Upload a text string as a new object.
-//            s3Client.putObject(bucketName, stringObjKeyName, "Uploaded String Object");
-//
-//            // Upload a file as a new object with ContentType and title specified.
-//            PutObjectRequest request = new PutObjectRequest(bucketName, fileObjKeyName, new File(fileName));
-//            ObjectMetadata metadata = new ObjectMetadata();
-//            metadata.setContentType("plain/text");
-//            metadata.addUserMetadata("x-amz-meta-title", "someTitle");
-//            request.setMetadata(metadata);
-//            s3Client.putObject(request);
-//        } catch (AmazonServiceException e) {
-//            // The call was transmitted successfully, but Amazon S3 couldn't process
-//            // it, so it returned an error response.
-//            e.printStackTrace();
-//        }
-//
-//    }
-//    public static void uploadtos3 (final Context context, final File file) {
-//
-//        if(file !=null){
-//            CognitoCachingCredentialsProvider credentialsProvider;
-//            credentialsProvider = new CognitoCachingCredentialsProvider(
-//                    context,
-//                    "your identity pool id", // Identity Pool ID
-//                    Regions.US_WEST_1 // Region
-//            );
-//
-//            AmazonS3 s3 = new AmazonS3Client(credentialsProvider);
-//
-//
-//            TransferUtility transferUtility = new TransferUtility(s3, context);
-//            final TransferObserver observer = transferUtility.upload(
-//                    "bucket name",  //this is the bucket name on S3
-//                    file.getName(),
-//                    file,
-//                    CannedAccessControlList.PublicRead //to make the file public
-//            );
-//            observer.setTransferListener(new TransferListener() {
-//                @Override
-//                public void onStateChanged(int id, TransferState state) {
-//                    if (state.equals(TransferState.COMPLETED)) {
-//                    } else if (state.equals(TransferState.FAILED)) {
-//                        Toast.makeText(context,"Failed to upload",Toast.LENGTH_LONG).show();
-//                    }
-//
-//                }
-//
-//                @Override
-//                public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
-//
-//                }
-//
-//                @Override
-//                public void onError(int id, Exception ex) {
-//
-//                }
-//            });
-//        }
-//    }
-//    public void uploadWithTransferUtility() {
-//
-//        TransferUtility transferUtility =
-//                TransferUtility.builder()
-//                        .context(getApplicationContext())
-//                        .awsConfiguration(AWSMobileClient.getInstance().getConfiguration())
-//                        .s3Client(new AmazonS3Client(AWSMobileClient.getInstance().getCredentialsProvider()))
-//                        .build();
-//
-//        String imageName = "";
-////        TransferObserver uploadObserver =
-////                transferUtility.upload(
-////                        "public/"+currentPhotoPath, photo);
-//        TransferObserver uploadObserver =
-//                transferUtility.upload(
-//                        "public/test.jpg", photo);
-//
-//        // Attach a listener to the observer to get state update and progress notifications
-//        uploadObserver.setTransferListener(new TransferListener() {
-//
-//            @Override
-//            public void onStateChanged(int id, TransferState state) {
-//                if (TransferState.COMPLETED == state) {
-//                    // Handle a completed upload.
-//                }
-//            }
-//
-//            @Override
-//            public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
-//                float percentDonef = ((float) bytesCurrent / (float) bytesTotal) * 100;
-//                int percentDone = (int)percentDonef;
-//
-//                Log.d("YourActivity", "ID:" + id + " bytesCurrent: " + bytesCurrent
-//                        + " bytesTotal: " + bytesTotal + " " + percentDone + "%");
-//            }
-//
-//            @Override
-//            public void onError(int id, Exception ex) {
-//                // Handle errors
-//            }
-//
-//        });
-//
-//        // If you prefer to poll for the data, instead of attaching a
-//        // listener, check for the state and progress in the observer.
-//        if (TransferState.COMPLETED == uploadObserver.getState()) {
-//            // Handle a completed upload.
-//        }
-//
-//        Log.d("YourActivity", "Bytes Transferrred: " + uploadObserver.getBytesTransferred());
-//        Log.d("YourActivity", "Bytes Total: " + uploadObserver.getBytesTotal());
-//    }
+    public void uploadWithTransferUtility() {
+
+        TransferUtility transferUtility =
+                TransferUtility.builder()
+                        .context(getApplicationContext())
+                        .awsConfiguration(AWSMobileClient.getInstance().getConfiguration())
+                        .s3Client(new AmazonS3Client(AWSMobileClient.getInstance().getCredentialsProvider()))
+                        .build();
+
+        TransferObserver uploadObserver =
+                transferUtility.upload(
+                        "public/"+photo.getName(), photo);
+
+        // Attach a listener to the observer to get state update and progress notifications
+        uploadObserver.setTransferListener(new TransferListener() {
+
+            @Override
+            public void onStateChanged(int id, TransferState state) {
+                if (TransferState.COMPLETED == state) {
+                    // Handle a completed upload.
+                }
+            }
+
+            @Override
+            public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
+                float percentDonef = ((float) bytesCurrent / (float) bytesTotal) * 100;
+                int percentDone = (int)percentDonef;
+
+                Log.d("YourActivity", "ID:" + id + " bytesCurrent: " + bytesCurrent
+                        + " bytesTotal: " + bytesTotal + " " + percentDone + "%");
+            }
+
+            @Override
+            public void onError(int id, Exception ex) {
+                // Handle errors
+            }
+
+        });
+
+        // If you prefer to poll for the data, instead of attaching a
+        // listener, check for the state and progress in the observer.
+        if (TransferState.COMPLETED == uploadObserver.getState()) {
+            // Handle a completed upload.
+        }
+
+        Log.d("YourActivity", "Bytes Transferrred: " + uploadObserver.getBytesTransferred());
+        Log.d("YourActivity", "Bytes Total: " + uploadObserver.getBytesTotal());
+    }
 
 
     @Override
