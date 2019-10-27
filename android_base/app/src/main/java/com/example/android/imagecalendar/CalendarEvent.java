@@ -18,7 +18,6 @@ public class CalendarEvent {
     Date date = new Date(19, 10, 00);
 
     public CalendarEvent() {
-
     }
 
     public void setTitle(String tt) {
