@@ -1,5 +1,7 @@
 package com.example.android.imagecalendar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.Date;
@@ -16,6 +18,37 @@ public class CalendarEvent {
     Date date = new Date(19, 10, 00);
 
     public CalendarEvent(JSONObject json) {
+        JSONArray arr = null;
+        try {
+            arr = json.getJSONArray("description");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String desc="";
+        for(int i=0; i<arr.length(); i++){
+            try {
+                desc+=(arr.getString(i)+"\n");
+            } catch (JSONException e) {
+            }
+        }
+        description = desc;
+        try {
+            title = (json.getString("title"));
+        } catch (JSONException e) {
+        }
+        String st="";
+        try {
+            st = json.getJSONArray("times").getString(0);
+        } catch (JSONException e) {
+        }
+        //TODO: Parse string into date, start time
+        String et="";
+        try {
+            et = json.getJSONArray("times").getString(1);
+        } catch (JSONException e) {
+        }
+        //TODO: Parse string into date, end time
 
     }
 

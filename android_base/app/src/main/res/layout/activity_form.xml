@@ -68,10 +68,10 @@
 
     <EditText
         android:id="@+id/description"
+        android:inputType="textMultiLine"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="126dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:text="Name" />
 
     <Button
