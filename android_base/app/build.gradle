@@ -42,6 +42,9 @@ dependencies {
     implementation ('com.amazonaws:aws-android-sdk-mobile-client:2.15.+@aar') { transitive = true }
     implementation ('com.amazonaws:aws-android-sdk-auth-userpools:2.15.+@aar') { transitive = true }
 
+
+    implementation 'com.amazonaws:aws-android-sdk-cognito:2.6.+'
+
 }
 
 dependencies {
