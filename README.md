@@ -14,8 +14,8 @@ Take image of an event poster and convert it to Google Calendar events
 
 ### Contributors
 * Burwin Liu
-* Ritika
-
+* Ritika Roy Choudhury
+* Alvin Duong
 
 ### Disclaimer
 * All Intellectual Properties belong to their respective owners.
