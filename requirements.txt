@@ -1,3 +1,5 @@
+dotenv
+boto3
 datefinder
 flask
 # This file may be used to create an environment using:
