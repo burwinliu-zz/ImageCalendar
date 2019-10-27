@@ -30,15 +30,40 @@ public class Form extends AppCompatActivity {
 
         JSONObject res = null;
         try {
-            res = new JSONObject();
-        } catch(Exception e){
+            res = new JSONObject("");
+            JSONArray arr = null;
+            try {
+                arr = res.getJSONArray("description");
+            } catch (Exception e) {
+            }
+            String desc="";
+            for(int i=0; i<arr.length(); i++){
+                try {
+                    desc+=(arr.getString(i)+"\n");
+                } catch (Exception e) {
+                }
+            }
+            ce.setDescription(desc);
 
+            try {
+                ce.setTitle(res.getString("title"));
+            } catch (Exception e) {
+            }
+            try {
+                ce.setStartTime(res.getJSONArray("times").getString(0));
+            } catch (Exception e) {
+            }
+            //TODO: Parse string into date, start time
+            try {
+                ce.setEndTime(res.getJSONArray("times").getString(1));
+            } catch (Exception e) {
+            }
+            //TODO: Parse string into date, end time
+
+        } catch (Exception e) {
         }
-//        try {
-//            res = new JSONObject("{\"description\":[\"A sensory- sory-friendly movie night for\",\"people on the spectrum\",\"April 2, 2019 6PM\",\"San Dias Community Hall\",\"Community Hall is wheelchair-accessible.\",\"SAN DIAS COMMUNLTY CENTER\"],\"times\":[\"Tue, 02 Apr 2019 18:00:00 GMT\",\"Tue, 02 Apr 2019 18:00:00 GMT\"],\"title\":\"Lights Up, Sound Down \"}");
-//        } catch (JSONException e) {
-//        }
-        ce = new CalendarEvent(res);
+
+
     }
 
     public void addEvent(View view){

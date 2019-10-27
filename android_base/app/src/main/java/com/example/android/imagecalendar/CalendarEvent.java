@@ -18,39 +18,6 @@ public class CalendarEvent {
     Date date = new Date(19, 10, 00);
 
     public CalendarEvent(JSONObject json) {
-        if(json==null){
-            return;
-        }
-        JSONArray arr = null;
-        try {
-            arr = json.getJSONArray("description");
-        } catch (Exception e) {
-        }
-
-        String desc="";
-        for(int i=0; i<arr.length(); i++){
-            try {
-                desc+=(arr.getString(i)+"\n");
-            } catch (Exception e) {
-            }
-        }
-        description = desc;
-        try {
-            title = (json.getString("title"));
-        } catch (Exception e) {
-        }
-        String st="";
-        try {
-            st = json.getJSONArray("times").getString(0);
-        } catch (Exception e) {
-        }
-        //TODO: Parse string into date, start time
-        String et="";
-        try {
-            et = json.getJSONArray("times").getString(1);
-        } catch (Exception e) {
-        }
-        //TODO: Parse string into date, end time
 
     }
 
