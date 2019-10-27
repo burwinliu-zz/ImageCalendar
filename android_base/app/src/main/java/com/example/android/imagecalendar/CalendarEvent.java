@@ -72,13 +72,15 @@ public class CalendarEvent {
 
     public Time getStartTime() {
         //TODO
-        Time time = new Time(00,00, 00);
-        return time;
+        //Time time = new Time(00,00, 00);
+        return this.startTime;
     }
 
     public void setStartTime(String s) {
         //TODO
-
+        if (s.matches("\\d\\d:\\d\\d:\\d\\d")) {
+            this.startTime = Time.valueOf(s);
+        }
     }
 
     public void setStartTime(Time s) {
