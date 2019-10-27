@@ -129,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements WelcomeDialog.Wel
         img.setImageBitmap(rawImage);
         uploadWithTransferUtility();
         Intent redirect = new Intent(this, Form.class);
+        redirect.putExtra("photo_file", "public/"+photo.getName());
         startActivity(redirect);
 //        uploadtos3(MainActivity.this, photo);
 //        Log.d("MainActivity", currentPhotoPath);
