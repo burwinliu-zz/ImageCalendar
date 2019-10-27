@@ -1,0 +1,19 @@
+{
+    "ipdo": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-androidbase-ipdo-133708-authRole",
+            "UnauthRoleArn": "arn:aws:iam::196034706488:role/amplify-androidbase-ipdo-133708-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::196034706488:role/amplify-androidbase-ipdo-133708-authRole",
+            "Region": "us-east-2",
+            "DeploymentBucketName": "amplify-androidbase-ipdo-133708-deployment",
+            "UnauthRoleName": "amplify-androidbase-ipdo-133708-unauthRole",
+            "StackName": "amplify-androidbase-ipdo-133708",
+            "StackId": "arn:aws:cloudformation:us-east-2:196034706488:stack/amplify-androidbase-ipdo-133708/615b8fe0-f830-11e9-8485-06a4a4f8cc44"
+        },
+        "categories": {
+            "auth": {
+                "androidbase02b99ba0": {}
+            }
+        }
+    }
+}
