@@ -24,7 +24,7 @@ def upload_image(path: str, bucket: str, key: str):
 
 def process_image(bucket: str, key: str):
     client = boto3.client('rekognition',
-                          region_name='us-west-2',
+                          region_name='us-east-2',
                           aws_access_key_id=os.getenv('AWS_ID'),
                           aws_secret_access_key=os.getenv('AWS_SECRET'), )
     response = client.detect_text(Image={'S3Object': {'Bucket': bucket, 'Name': key}}, )
@@ -57,7 +57,7 @@ def _find_time_aws(text: str):
     :return:
     '''
     comprehend = boto3.client(service_name='comprehend',
-                              region_name='us-west-2',
+                              region_name='us-east-2',
                               aws_access_key_id=os.getenv('AWS_ID'),
                               aws_secret_access_key=os.getenv('AWS_SECRET'), )
     response = comprehend.detect_entities(Text=text, LanguageCode='en')
@@ -73,7 +73,7 @@ def _find_time(response: dict):
 
 if __name__ == "__main__":
     # Change bucket and photo to your S3 Bucket and image.
-    img_bucket = 'imagecalendarwest2'
+    img_bucket = 'imagecal'
     img_key = 'test'
-    # upload_image(os.path.join(ROOT_DIR, "flyerexamples\\trial4.jpg"), img_bucket, img_key)
+    # upload_image(os.path.join(ROOT_DIR, "flyerexamples\\trial.jpg"), img_bucket, img_key)
     print(process_image(img_bucket, img_key))
