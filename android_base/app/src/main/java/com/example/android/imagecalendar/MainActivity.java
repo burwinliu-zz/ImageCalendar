@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements WelcomeDialog.Wel
         img.setImageBitmap(rawImage);
         uploadWithTransferUtility();
         Intent redirect = new Intent(this, Form.class);
-        redirect.putExtra("photo_file", "public/"+photo.getName());
+        redirect.putExtra("photo_file", photo.getName());
         startActivity(redirect);
 //        uploadtos3(MainActivity.this, photo);
 //        Log.d("MainActivity", currentPhotoPath);
@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements WelcomeDialog.Wel
 
         TransferObserver uploadObserver =
                 transferUtility.upload(
-                        "public/"+photo.getName(), photo);
+                        photo.getName(), photo);
 
         // Attach a listener to the observer to get state update and progress notifications
         uploadObserver.setTransferListener(new TransferListener() {

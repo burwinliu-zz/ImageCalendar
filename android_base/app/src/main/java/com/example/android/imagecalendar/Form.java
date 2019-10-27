@@ -6,9 +6,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 
 public class Form extends AppCompatActivity {
     EditText m_title, m_date, m_startTime, m_endTime, m_description;
@@ -29,7 +40,21 @@ public class Form extends AppCompatActivity {
         m_description=(EditText) findViewById(R.id.description);
 
         try {
-            JSONObject res = new JSONObject("{\"description\":[\"A sensory- sory-friendly movie night for\",\"people on the spectrum\",\"April 2, 2019 6PM\",\"San Dias Community Hall\",\"Community Hall is wheelchair-accessible.\",\"SAN DIAS COMMUNLTY CENTER\"],\"times\":[\"Tue, 02 Apr 2019 18:00:00 GMT\"],\"title\":\"Lights Up, Sound Down \"}\n");
+            String sURL = "http://54.188.34.34:8080/get_event?bucket=imagecal&key=test"; //just a string
+
+            // Connect to the URL using java's native library
+            URL url = new URL(sURL);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
+            BufferedReader in =new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            } in .close();
+            JSONObject res = new JSONObject(response.toString());
+//            JSONObject res = new JSONObject("{\"description\":[\"A sensory- sory-friendly movie night for\",\"people on the spectrum\",\"April 2, 2019 6PM\",\"San Dias Community Hall\",\"Community Hall is wheelchair-accessible.\",\"SAN DIAS COMMUNLTY CENTER\"],\"times\":[\"Tue, 02 Apr 2019 18:00:00 GMT\"],\"title\":\"Lights Up, Sound Down \"}\n");
             JSONArray arr = null;
             try {
                 arr = res.getJSONArray("description");
