@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from image import process_image
+from processing.image import process_image
 
 app = Flask(__name__)
 
@@ -14,4 +14,4 @@ def hello():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host= '0.0.0.0', port ='8080')
