@@ -6,12 +6,15 @@ import java.sql.Time;
 public class CalendarEvent {
     String title = "";
     String description = "";
-    String startTime = "";
-    String endTime = "";
-    String date = "";
+    //String startTime = "";
+    Time startTime = new Time(00, 00, 00);
+    //String endTime = "";
+    Time endTime = new Time(00, 00, 00);
+    //String date = "";
+    Date date = new Date(19, 10, 00);
 
     public CalendarEvent() {
-        
+
     }
 
     public void setTitle(String tt) {
@@ -38,6 +41,11 @@ public class CalendarEvent {
 
     public void setStartTime(String s) {
         //TODO
+
+    }
+
+    public void setStartTime(Time s) {
+        this.startTime = s;
     }
 
     public Time getEndTime() {
@@ -59,5 +67,31 @@ public class CalendarEvent {
 
     public void setDate(String s) {
         //TODO
+        if (s.contains("Jan") || s.contains("January")) {
+
+        } else if (s.contains("Feb")) {
+
+        } else if (s.contains("Mar")) {
+
+        } else if (s.contains("Apr")) {
+
+        } else if (s.contains("May")) {
+
+        } else if (s.contains("Jun")) {
+
+        } else if (s.contains ("Jul")) {
+
+        } else if (s.contains("Aug")) {
+
+        } else if (s.contains("Sep")) {
+
+        } else if (s.contains("Oct")) {
+
+        } else if (s.contains("Nov")) {
+
+        } else if (s.contains("Dec")) {
+
+        }
+
     }
 }
