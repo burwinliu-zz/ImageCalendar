@@ -1,5 +1,7 @@
 package com.example.android.imagecalendar;
 
+import org.json.JSONObject;
+
 import java.sql.Date;
 import java.sql.Time;
 
@@ -13,7 +15,7 @@ public class CalendarEvent {
     //String date = "";
     Date date = new Date(19, 10, 00);
 
-    public CalendarEvent() {
+    public CalendarEvent(JSONObject json) {
 
     }
 
