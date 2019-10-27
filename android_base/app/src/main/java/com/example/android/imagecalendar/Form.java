@@ -1,6 +1,8 @@
 package com.example.android.imagecalendar;
 
 import android.content.Intent;
+import android.icu.util.Calendar;
+import android.provider.CalendarContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -40,7 +42,7 @@ public class Form extends AppCompatActivity {
         m_description=(EditText) findViewById(R.id.description);
 
         try {
-            String sURL = "http://54.188.34.34:8080/get_event?bucket=imagecal&key=test"; //just a string
+            String sURL = "http://54.188.34.34:8080/get_event?bucket=imagecal&key="+photo_file; //just a string
 
             // Connect to the URL using java's native library
             URL url = new URL(sURL);
@@ -98,6 +100,27 @@ public class Form extends AppCompatActivity {
     }
 
     public void addEvent(View view){
+        Calendar beginTime = Calendar.getInstance();
+        beginTime.set(2019, 9, 28, 8, 30);
+        Calendar endTime = Calendar.getInstance();
+        endTime.set(2019, 9, 28, 11, 00);
+        Intent intent = new Intent(Intent.ACTION_INSERT)
+                .setData(CalendarContract.Events.CONTENT_URI)
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
+                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis())
+                .putExtra(CalendarContract.Events.TITLE, "Yoga")
+                .putExtra(CalendarContract.Events.DESCRIPTION, "Group class")
+                .putExtra(CalendarContract.Events.EVENT_LOCATION, "The gym")
+                .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
+        startActivity(intent);
 
     }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        Intent redirect = new Intent(this, MainActivity.class);
+        startActivity(redirect);
+
+    }
+
 }
