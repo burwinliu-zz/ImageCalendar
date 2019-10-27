@@ -1,3 +1,3 @@
-http://127.0.0.1:5000/get_event?bucket=imagecalendarwest2&key=test
+http://127.0.0.1:5000/get_event?bucket=imagecal&key=test
 
 request is made as bucket="NAME" and key="FILENAME"
