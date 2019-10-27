@@ -1,0 +1,38 @@
+{
+    "UserAgent": "aws-amplify-cli/0.1.0",
+    "Version": "0.1.0",
+    "IdentityManager": {
+        "Default": {}
+    },
+    "AppSync": {
+        "Default": {
+            "ApiUrl": "https://niew6ieg5za4nfmrfx6npkprvi.appsync-api.us-east-2.amazonaws.com/graphql",
+            "Region": "us-east-2",
+            "AuthMode": "API_KEY",
+            "ApiKey": "da2-kzltryycbrflbpp6647sjmvfqi",
+            "ClientDatabasePrefix": "androidbase_API_KEY"
+        }
+    },
+    "CredentialsProvider": {
+        "CognitoIdentity": {
+            "Default": {
+                "PoolId": "us-east-2:d43d5110-0183-4bb8-94e4-cba344264241",
+                "Region": "us-east-2"
+            }
+        }
+    },
+    "CognitoUserPool": {
+        "Default": {
+            "PoolId": "us-east-2_Yfg58u2BC",
+            "AppClientId": "2dp6mms62tmlaoi73hg131pp1p",
+            "AppClientSecret": "1lgidpnjj1hjarn7mbk0k9c4rir6kfl2sr64gjpvl6k6a99qr0r",
+            "Region": "us-east-2"
+        }
+    },
+    "S3TransferUtility": {
+        "Default": {
+            "Bucket": "ipdoea07edde033a4300a788f14ccad4c465-ipdo",
+            "Region": "us-east-2"
+        }
+    }
+}
