@@ -43,7 +43,6 @@ import static android.content.pm.PackageManager.PERMISSION_DENIED;
 
 public class MainActivity extends AppCompatActivity implements WelcomeDialog.WelcomeDialogListener {
     public static final int PERMISSION_REQUEST_CAMERA = 3217;
-    private AWSAppSyncClient mAWSAppSyncClient;
     private static final String TAG = MainActivity.class.getSimpleName();
     static final int REQUEST_TAKE_PHOTO = 1;
     File photo = null;
@@ -59,10 +58,6 @@ public class MainActivity extends AppCompatActivity implements WelcomeDialog.Wel
         getApplicationContext().startService(new Intent(getApplicationContext(), TransferService.class));
 
         img = (ImageView) findViewById(R.id.image);
-        mAWSAppSyncClient = AWSAppSyncClient.builder()
-                .context(getApplicationContext())
-                .awsConfiguration(new AWSConfiguration(getApplicationContext()))
-                .build();
         // Initialize the AWSMobileClient if not initialized
         AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback<UserStateDetails>() {
             @Override
@@ -133,6 +128,8 @@ public class MainActivity extends AppCompatActivity implements WelcomeDialog.Wel
         Bitmap rawImage = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(photo.getAbsolutePath()), 2048, 1536, true);
         img.setImageBitmap(rawImage);
         uploadWithTransferUtility();
+        Intent redirect = new Intent(this, Form.class);
+        startActivity(redirect);
 //        uploadtos3(MainActivity.this, photo);
 //        Log.d("MainActivity", currentPhotoPath);
 

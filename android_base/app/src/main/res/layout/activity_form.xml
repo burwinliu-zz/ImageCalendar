@@ -78,5 +78,6 @@
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="addEvent"
         android:text="Add to Calendar" />
 </LinearLayout>
