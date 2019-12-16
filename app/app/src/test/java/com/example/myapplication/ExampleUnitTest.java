@@ -1,4 +1,4 @@
-package com.example.android.imagecalendar;
+package com.example.myapplication;
 
 import org.junit.Test;
 
