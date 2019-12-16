@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="#000000"
     tools:context=".MainActivity">
 
     <include
@@ -12,19 +13,15 @@
 
     <Button
         android:id="@+id/btnTakePic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/round_button"
         app:layout_anchor="@+id/include"
         app:layout_anchorGravity="bottom|center" />
 
     <ImageView
-        android:id="@+id/imageTake"
+        android:id="@+id/cameraPreview"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

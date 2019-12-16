@@ -12,12 +12,20 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+// Begin user defined inports
+import android.widget.Button;
+import android.widget.ImageView;
+
 public class MainActivity extends AppCompatActivity {
+    Button btnTakePic;
+    ImageView cameraPreview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        btnTakePic = findViewById(R.id.btnTakePic);
+        cameraPreview = findViewById(R.id.cameraPreview);
     }
 
     @Override
