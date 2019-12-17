@@ -16,12 +16,27 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/round_button"
+        android:layout_marginBottom="50dp"
         app:layout_anchor="@+id/include"
         app:layout_anchorGravity="bottom|center" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="25dp"
+            android:layout_gravity="start|bottom"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+    </FrameLayout>
 
     <ImageView
         android:id="@+id/cameraPreview"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
