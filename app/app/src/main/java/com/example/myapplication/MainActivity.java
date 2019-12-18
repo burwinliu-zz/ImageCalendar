@@ -2,6 +2,8 @@ package com.example.myapplication;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -11,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,15 +21,22 @@ import android.view.MenuItem;
 // Begin user defined inports
 import android.widget.Button;
 import android.widget.ImageView;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.BitmapDrawable;
+import android.content.Intent;
+
+import java.util.NoSuchElementException;
 
 public class MainActivity extends AppCompatActivity {
     Button btnTakePic;
-    ImageView cameraPreview;
+    ImageView galleryPreview;
+    SurfaceView cameraPreview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        galleryPreview = findViewById(R.id.galleryPreview);
         btnTakePic = findViewById(R.id.btnTakePic);
         cameraPreview = findViewById(R.id.cameraPreview);
     }
@@ -53,9 +63,34 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //response functions
     public void seeGallery(View view){
+        Intent galleryIntent = new Intent(this, GalleryActivity.class);
+        startActivity(galleryIntent);
     }
 
     public void savePicture(View view){
+    }
+
+    // Setter functions
+    private void scaleImage(ImageView view, int viewSize) throws NoSuchElementException{
+        // Get whatever the view contains
+        Bitmap bitmap;
+        int width, height;
+
+        try{
+            Drawable drawing = view.getDrawable();
+            bitmap = ((BitmapDrawable) drawing).getBitmap();
+        }catch (NullPointerException e) {
+            throw new NoSuchElementException("No drawable on given view");
+        }
+        try {
+            width = bitmap.getWidth();
+            height = bitmap.getHeight();
+        } catch (NullPointerException e) {
+            throw new NoSuchElementException("Can't find bitmap on given view/drawable");
+        }
+
+
     }
 }
