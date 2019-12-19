@@ -11,7 +11,7 @@
         android:id="@+id/include"
         layout="@layout/content_main" />
 
-    <SurfaceView
+    <TextureView
         android:id="@+id/cameraPreview"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
@@ -23,7 +23,7 @@
         android:layout_height="50dp"
         android:background="@drawable/round_button"
         android:layout_marginBottom="50dp"
-        android:onClick="seeGallery"
+        android:onClick="savePicture"
         app:layout_anchor="@+id/include"
         app:layout_anchorGravity="bottom|center" />
 
@@ -39,6 +39,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="25dp"
+            android:scaleType="centerInside"
             android:onClick="seeGallery"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
     </FrameLayout>

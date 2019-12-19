@@ -1,44 +1,59 @@
 package com.example.myapplication;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.media.Image;
-import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import android.graphics.SurfaceTexture;
+
+import android.hardware.camera2.CameraDevice;
+import android.hardware.camera2.CameraCaptureSession;
+import android.hardware.camera2.CaptureRequest;
+import android.hardware.camera2.TotalCaptureResult;
+
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 
-import android.view.SurfaceView;
+import android.view.TextureView;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-// Begin user defined inports
 import android.widget.Button;
 import android.widget.ImageView;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.BitmapDrawable;
+
 import android.content.Intent;
 
-import java.util.NoSuchElementException;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
+    //Threads
+    private HandlerThread mBackgroundThread;
+    private Handler mBackgroundHandler;
+
+    // Apps Elements
     Button btnTakePic;
     ImageView galleryPreview;
-    SurfaceView cameraPreview;
+    TextureView cameraPreview;
+
+    // Camera variables
+    CameraDevice camera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        galleryPreview = findViewById(R.id.galleryPreview);
-        btnTakePic = findViewById(R.id.btnTakePic);
-        cameraPreview = findViewById(R.id.cameraPreview);
+
+        galleryPreview =    findViewById(R.id.galleryPreview);
+        btnTakePic =        findViewById(R.id.btnTakePic);
+        cameraPreview =     findViewById(R.id.cameraPreview);
+
+
+
+        assert galleryPreview   != null;
+        assert btnTakePic       != null;
+        assert cameraPreview    != null;
     }
 
     @Override
@@ -63,6 +78,77 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // Housekeeping
+    // Setting up the TextureView
+    TextureView.SurfaceTextureListener listener = new TextureView.SurfaceTextureListener() {
+        @Override
+        public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+            openCamera();
+        }
+
+        @Override
+        public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+
+        }
+
+        @Override
+        public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+            return false;
+        }
+
+        @Override
+        public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+
+        }
+    };
+
+    // Setting up recalling of state (for camera capture)
+    private final CameraDevice.StateCallback stateCallback = new CameraDevice.StateCallback() {
+        @Override
+        public void onOpened(CameraDevice camera) {
+            //This is called when the camera is open
+            Log.e("AndroidCameraApi", "onOpened");
+            camera = camera;
+            createCameraPreview();
+        }
+
+        @Override
+        public void onDisconnected(CameraDevice camera) {
+            camera.close();
+        }
+
+        @Override
+        public void onError(CameraDevice camera, int error) {
+            camera.close();
+            camera = null;
+        }
+    };
+
+    //Setting up for capturing the recalling of the camera device
+    final CameraCaptureSession.CaptureCallback captureCallbackListener = new CameraCaptureSession.CaptureCallback() {
+        @Override
+        public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
+
+        }
+    };
+
+    protected void startBackgroundThread() {
+        mBackgroundThread = new HandlerThread("Camera Background");
+        mBackgroundThread.start();
+        mBackgroundHandler = new Handler(mBackgroundThread.getLooper());
+    }
+
+    protected void stopBackgroundThread() {
+        mBackgroundThread.quitSafely();
+        try {
+            mBackgroundThread.join();
+            mBackgroundThread = null;
+            mBackgroundHandler = null;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     //response functions
     public void seeGallery(View view){
         Intent galleryIntent = new Intent(this, GalleryActivity.class);
@@ -70,27 +156,54 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void savePicture(View view){
+
     }
 
-    // Setter functions
-    private void scaleImage(ImageView view, int viewSize) throws NoSuchElementException{
+    // helper functions
+    private void openCamera(){
+
+    }
+
+    private void createCameraPreview(){}
+
+
+    private Bitmap scaleImage(Bitmap image, int viewWidth, int viewHeight){
         // Get whatever the view contains
-        Bitmap bitmap;
-        int width, height;
-
-        try{
-            Drawable drawing = view.getDrawable();
-            bitmap = ((BitmapDrawable) drawing).getBitmap();
-        }catch (NullPointerException e) {
-            throw new NoSuchElementException("No drawable on given view");
-        }
-        try {
-            width = bitmap.getWidth();
-            height = bitmap.getHeight();
-        } catch (NullPointerException e) {
-            throw new NoSuchElementException("Can't find bitmap on given view/drawable");
+        double ratio;
+        Bitmap result;
+        if(image.getWidth() < viewWidth || image.getHeight() < viewHeight){
+            if(viewWidth < viewHeight){
+                ratio = viewHeight/image.getHeight();
+            }
+            else{
+                ratio = viewWidth/image.getWidth();
+            }
+            result = Bitmap.createScaledBitmap(image, (int)(image.getWidth()*ratio), (int)(image.getHeight()*ratio), false);
+        } else{
+            result = Bitmap.createBitmap(image);
         }
 
 
+        if (result.getWidth() >= result.getHeight()){
+            return Bitmap.createBitmap(
+                    result,
+                    result.getWidth()/2 - result.getHeight()/2,
+                    0,
+                    result.getHeight(),
+                    result.getHeight()
+            );
+
+        }else{
+
+            return Bitmap.createBitmap(
+                    result,
+                    0,
+                    result.getHeight()/2 - result.getWidth()/2,
+                    result.getWidth(),
+                    result.getWidth()
+            );
+        }
     }
+
+
 }
