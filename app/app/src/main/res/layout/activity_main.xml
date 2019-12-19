@@ -23,7 +23,6 @@
         android:layout_height="50dp"
         android:background="@drawable/round_button"
         android:layout_marginBottom="50dp"
-        android:onClick="savePicture"
         app:layout_anchor="@+id/include"
         app:layout_anchorGravity="bottom|center" />
 
@@ -40,7 +39,6 @@
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="25dp"
             android:scaleType="centerInside"
-            android:onClick="seeGallery"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
     </FrameLayout>
 
