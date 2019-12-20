@@ -24,6 +24,7 @@ import android.os.Environment;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.view.Surface;
@@ -80,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
     private String cameraId;
     protected CameraDevice cameraDevice;
     protected CameraCaptureSession cameraCaptureSessions;
-    protected CaptureRequest captureRequest;
     protected CaptureRequest.Builder captureRequestBuilder;
 
     // Image variables
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         assert btnTakePic       != null;
         assert cameraPreview    != null;
 
-        cameraPreview.setSurfaceTextureListener(listener);
+        cameraPreview.setSurfaceTextureListener(surfaceTextureListener);
 
         //onClick listener -- declared here in case in future we want fragments to be used
         btnTakePic.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Housekeeping
     // Setting up the TextureView
-    TextureView.SurfaceTextureListener listener = new TextureView.SurfaceTextureListener() {
+    TextureView.SurfaceTextureListener surfaceTextureListener = new TextureView.SurfaceTextureListener() {
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
             Log.e(TAG, "Camera attempted");
@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void takePicture(){
-        if (null == cameraDevice) {
+        if (cameraDevice == null) {
             Log.e(TAG, "cameraDevice is null");
             return;
         }
@@ -361,8 +361,9 @@ public class MainActivity extends AppCompatActivity {
             assert map != null;
             imageDimension = map.getOutputSizes(SurfaceTexture.class)[0];
             // Add permission for camera and let user grant the permission
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED &&
-                    ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+                Log.e(TAG, "Retrieving PERMISSION");
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CAMERA_PERMISSION);
                 return;
             }
             manager.openCamera(cameraId, stateCallback, null);
@@ -385,6 +386,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void closeCamera() {
+        Log.e(TAG, "CAMERA CLOSED");
         if (null != cameraDevice) {
             cameraDevice.close();
             cameraDevice = null;
@@ -414,17 +416,16 @@ public class MainActivity extends AppCompatActivity {
         if (cameraPreview.isAvailable()) {
             openCamera();
         } else {
-            cameraPreview.setSurfaceTextureListener(listener);
+            cameraPreview.setSurfaceTextureListener(surfaceTextureListener);
         }
     }
 
     @Override
     protected void onPause() {
         Log.e(TAG, "onPause");
-        //closeCamera();
+        closeCamera();
         stopBackgroundThread();
         super.onPause();
     }
-
 
 }
